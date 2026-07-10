@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deltarune Pong</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app" class="app stage-fit">
+    <div id="hud" class="hud hidden">
+      <h1>Deltarune Pong</h1>
+      <div class="scoreboard">
+        <span id="player1-label">Player 1</span>
+        <span id="player1-score">0</span>
+        <span class="divider">—</span>
+        <span id="player2-score">0</span>
+        <span id="player2-label">Player 2</span>
+      </div>
+    </div>
+
+    <div id="mute-toast" class="toast hidden">🔊</div>
+
+    <div id="stage-wrapper" class="stage-wrapper">
+      <canvas id="game" width="800" height="500"></canvas>
+    </div>
+
+    <div id="pause-overlay" class="overlay pause-overlay hidden">
+      <div class="overlay-panel pause-panel">
+        <h2>Paused</h2>
+        <p class="subtitle">Battle on hold</p>
+        <div class="button-group">
+          <button id="btn-resume" class="text-btn">Resume</button>
+          <button id="btn-pause-settings" class="text-btn">Settings</button>
+          <button id="btn-pause-menu" class="text-btn">Return to Menu</button>
+        </div>
+        <p class="pause-hint"><kbd>Esc</kbd> to resume</p>
+      </div>
+    </div>
+
+    <div id="menu-overlay" class="overlay">
+      <div class="overlay-panel menu-panel">
+        <h1 id="title-logo" class="title-glow" style="cursor: pointer;">Deltarune Pong</h1>
+        <p class="subtitle">A Deltarune fangame based on an arcade classic!</p>
+
+        <div class="controls-card">
+          <h2>Controls</h2>
+          <div class="control-row">
+            <span class="control-label">Player 1</span>
+            <span class="control-keys"><kbd>W</kbd> <kbd>S</kbd></span>
+          </div>
+          <div class="control-row">
+            <span class="control-label">Player 2</span>
+            <span class="control-keys"><kbd>↑</kbd> <kbd>↓</kbd></span>
+          </div>
+          <div class="control-row muted-row">
+            <span class="control-label">Mute Audio</span>
+            <span class="control-keys"><kbd>M</kbd></span>
+          </div>
+          <div class="control-row muted-row">
+            <span class="control-label">Pause</span>
+            <span class="control-keys"><kbd>Esc</kbd></span>
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button id="btn-1p" class="text-btn">1 Player</button>
+          <button id="btn-2p" class="text-btn">2 Player</button>
+          <button id="btn-settings" class="text-btn">Settings</button>
+        </div>
+
+        <div class="credits" style="margin-top: 1.5rem; font-size: 0.8rem; color: #888; line-height: 1.4;">
+          <p>Created by <strong>Toby Fox</strong> (Deltarune & Assets)</p>
+          <p>Vibecoded by <strong>Nicholas Slaughter</strong></p>
+          <p>Coded with <strong>Cursor</strong> & <strong>Google Gemini</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <div id="settings-overlay" class="overlay hidden">
+      <div class="overlay-panel settings-panel">
+        <h2>Settings</h2>
+
+        <div class="setting">
+          <label>Difficulty (1P Only)</label>
+          <div class="setting-control">
+            <select id="difficulty-select" class="dropdown">
+              <option value="easy">Easy</option>
+              <option value="normal" selected>Normal</option>
+              <option value="hard">Hard</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="setting">
+          <label for="mobile-support" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+            <span>Mobile Support (Drag to Move)</span>
+            <input type="checkbox" id="mobile-support" style="transform: scale(1.2);">
+          </label>
+        </div>
+
+        <div class="setting">
+          <label for="sensitivity">Paddle Sensitivity</label>
+          <div class="setting-control">
+            <input type="range" id="sensitivity" min="20" max="100" value="65" step="5">
+            <span id="sensitivity-value" class="setting-value">65%</span>
+          </div>
+        </div>
+
+        <div class="setting">
+          <label>Stage Size</label>
+          <div class="option-grid" id="stage-size-grid"></div>
+        </div>
+
+        <div class="setting">
+          <label>Custom Music</label>
+          <div class="setting-control">
+            <input type="file" id="custom-music-input" accept=".mp3,.wav,.ogg" style="flex: 1; color: white; font-family: inherit;">
+            <button id="btn-default-music" class="text-btn" style="font-size: 0.9rem;">Default</button>
+          </div>
+        </div>
+
+        <div class="setting">
+          <label for="sfx-volume">Sound Effects Volume</label>
+          <div class="setting-control">
+            <input type="range" id="sfx-volume" min="0" max="100" value="70" step="5">
+            <span id="sfx-volume-value" class="setting-value">70%</span>
+          </div>
+        </div>
+
+        <div class="setting">
+          <label for="music-volume">Music Volume</label>
+          <div class="setting-control">
+            <input type="range" id="music-volume" min="0" max="100" value="50" step="5">
+            <span id="music-volume-value" class="setting-value">50%</span>
+          </div>
+        </div>
+
+        <div class="button-group" style="margin-top: 1.5rem;">
+          <button id="btn-settings-back" class="text-btn">Back</button>
+          <button id="btn-test-sound" class="text-btn">Test Sound</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="game.js"></script>
+</body>
+</html>

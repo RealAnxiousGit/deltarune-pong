@@ -1,0 +1,334 @@
+@font-face {
+  font-family: 'Determination';
+  src: url('determination.ttf') format('truetype');
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: black;
+  color: white;
+  font-family: 'Determination', sans-serif;
+  letter-spacing: 1px;
+}
+
+.app {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.app.stage-stretch {
+  padding: 0;
+  justify-content: stretch;
+}
+
+.app.stage-stretch .stage-wrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  aspect-ratio: auto;
+}
+
+.app.stage-stretch #game {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.app.stage-stretch .hud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  padding: 1rem 1.5rem 2rem;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.72), transparent);
+  pointer-events: none;
+}
+
+.app.stage-fit {
+  padding: 1rem;
+  gap: 0.75rem;
+}
+
+.stage-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.app.stage-fit .stage-wrapper {
+  width: min(90vw, 800px);
+  height: min(calc(100vh - 180px), 500px);
+}
+
+#game {
+  display: block;
+  border: 2px solid white;
+  background: black url('UTDR_BG.gif') repeat;
+  image-rendering: pixelated;
+  touch-action: none; 
+}
+
+/* Mute Toast CSS 
+*/
+.toast {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  background: black;
+  border: 2px solid white;
+  color: white;
+  font-size: 2rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+.toast.hidden {
+  display: none;
+  opacity: 0;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  z-index: 10;
+  padding: 1rem;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.hud.hidden {
+  display: none;
+}
+
+.hud {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 1rem;
+}
+
+.overlay-panel {
+  background: black;
+  border: 2px solid white;
+  padding: 2rem 2.5rem;
+  max-width: 480px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: translateY(0) scale(1);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.overlay.hidden .overlay-panel {
+  transform: translateY(-40px) scale(0.95);
+}
+
+.menu-panel h1 {
+  font-size: 2.4rem;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.subtitle {
+  color: #ccc;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.controls-card {
+  border: 1px solid white;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.controls-card h2 {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.control-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.35rem 0;
+  border-top: 1px solid #333;
+}
+
+.control-row:first-of-type {
+  border-top: none;
+}
+
+.control-label {
+  font-size: 1rem;
+}
+
+.control-keys kbd {
+  display: inline-block;
+  min-width: 1.8rem;
+  text-align: center;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid white;
+  font-family: inherit;
+  font-size: 0.9rem;
+  margin-left: 0.25rem;
+}
+
+.muted-row .control-label,
+.muted-row .control-keys {
+  color: #aaa;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  /* Adjusted for tighter spacing */
+  gap: 0.15rem; 
+}
+
+.text-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-family: inherit;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.25rem 0; /* Reduced padding for tighter fit */
+  transition: color 0.15s ease;
+  text-transform: uppercase;
+}
+
+.text-btn:hover {
+  color: yellow;
+}
+
+.settings-panel h2 {
+  font-size: 2rem;
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+
+.setting {
+  margin-bottom: 1.25rem;
+  text-align: left;
+}
+
+.setting label {
+  display: block;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.setting-control {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.setting-control input[type="range"] {
+  flex: 1;
+  accent-color: white;
+  cursor: pointer;
+}
+
+.setting-value {
+  min-width: 2.5rem;
+  color: yellow;
+  font-size: 1.1rem;
+}
+
+.dropdown {
+  background: black;
+  color: white;
+  border: 1px solid white;
+  font-family: inherit;
+  font-size: 1.1rem;
+  padding: 0.25rem 0.5rem;
+  width: 100%;
+}
+
+.option-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.option-btn {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #555;
+  background: black;
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.option-btn:hover {
+  border-color: yellow;
+  color: yellow;
+}
+
+.option-btn.active {
+  border-color: white;
+  color: white;
+  background: #222;
+}
+
+.hud h1 {
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+.scoreboard {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  font-size: 2.5rem;
+}
+
+#player1-label { text-align: right; min-width: 4.5rem; font-size: 1rem; color: #aaa; text-transform: uppercase; }
+#player2-label { text-align: left; min-width: 4.5rem; font-size: 1rem; color: #aaa; text-transform: uppercase; }

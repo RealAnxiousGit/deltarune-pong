@@ -1,0 +1,17 @@
+{
+  "name": "deltarune-pong",
+  "version": "1.0.0",
+  "description": "A Deltarune fangame based on an arcade classic",
+  "main": "main.js",
+ "scripts": {
+  "start": "electron .",
+  "package-win": "electron-packager . DeltarunePong --platform=win32 --arch=x64 --icon=icon.ico --out=dist --overwrite",
+  "package-mac": "electron-packager . DeltarunePong --platform=darwin --arch=x64,arm64 --icon=icon.icns --out=dist --overwrite",
+  "package-linux": "electron-packager . DeltarunePong --platform=linux --arch=x64 --out=dist --overwrite",
+  "package-all": "npm run package-win && npm run package-mac && npm run package-linux"
+},
+  "devDependencies": {
+    "electron": "^x.x.x",
+    "electron-packager": "^x.x.x"
+  }
+}
